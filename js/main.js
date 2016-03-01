@@ -57,8 +57,35 @@ var aData =
 [
 	{id:"r0", name:"Bob"},
 	{id:"r1", name:"Doug"}
-]
+];
+
+var oNewContact = {name:"", description:"", email:""};
+
+class ContactForm extends React.Component
+{
+	constructor(oProps)
+	{
+		super(oProps);
+	}
+
+	render()
+	{
+		return (
+			<form>
+				<input type="text" placeholder="Name (req)" value={this.props.contact.name}></input>
+				<input type="text" placeholder="Email" value={this.props.contact.email}></input>
+				<textarea placeholder="description" value={this.props.contact.description}></textarea>
+				<button type="submit">Add Contact</button>
+			</form>
+		)
+	}
+}
+
+ContactForm.propTypes = {contact:React.PropTypes.object.isRequired};
 
 render((
-	<Main listItems={aData}/>
+	<div>
+		<Main listItems={aData}/>
+		<ContactForm contact={oNewContact}/>
+	</div>
 ), document.getElementById('main'));
