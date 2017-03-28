@@ -1,7 +1,8 @@
 import React from "react";
 import {render} from 'react-dom';
 
-class Main extends React.Component {
+class Main extends React.Component
+{
 	constructor(oProps)
 	{
 		super(oProps);
@@ -43,10 +44,11 @@ class ListTest extends React.Component
 			function(oI)
 			{
 				return(
-					<li key={oI.key} className="list-item">
-						<h3>{oI.name}</h3>
-						<a href={oI.email}>{oI.email}</a>
-						<p>{oI.description}</p>
+					<li className="list-item">
+						<span><b>{oI["EventName"]}</b> | <span>{oI["EventStartDate"]} : {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span></span>
+						<div><b>Category:</b> {oI["EventCategory"]}| <b>Players:</b> {oI["MaximumPlayers"]} | <b>Complexity:</b> {oI["GameComplexity"]}</div>
+						<div><b>Manufacturer:</b> {oI["GameManufacturer"]}| <b>System:</b> {oI["GameSystem"]} | <b>Host:</b> {oI["HostingCompanyorClub"]}</div>
+						<p>{oI["FeatureTextDescription"]}</p>
 					</li>
 				)
 			}
@@ -104,7 +106,7 @@ class MainView extends React.Component
 		return (
 			<div className={this.props.cssName}>
 				<Main listItems={this.props.contacts}/>
-				<ContactForm contact={this.props.newContact}/>
+				// <ContactForm contact={this.props.newContact}/>
 			</div>
 		);
 	}
@@ -126,7 +128,42 @@ var aData =
 
 var oNewContact = {name:"", description:"", email:""};
 
-render((
-		<MainView contacts={aData} newContact={oNewContact} cssName="got-monkey"/>
+let oReq = new XMLHttpRequest();
+oReq.onload = (e)=>{
+	let oData = JSON.parse(e.currentTarget.responseText);
+	let aEvents = oData["Events Main"]
+	let oStuff = {
+		EventName:{},
+		EventStartDate:{},
+		EventStartTime:{},
+		EventCategory:{}
+	};
+	let oGather = [
+		{id:"name", field:"EventName"},
+		{id:"date", field:"EventStartDate"},
+		{id:"start", field:"EventStartTime"},
+		{id:"type", field:"EventCategory"},
+	]
+	for (let oEvent of aEvents)
+	{
+				
+		for(let sProp in oEvent)
+		{
+			const sNew = sProp.replace(new RegExp(" ", 'g'), "").replace(/[\n\r]/g, '');
+			oEvent[sNew] = oEvent[sProp]
+			delete oEvent[sProp];
+			if(oStuff[sNew] !== null && oStuff[sNew] !== undefined && oStuff[sNew][oEvent[sNew]] == null)
+			{
+				oStuff[sNew][oEvent[sNew]] = true;
+			}
+		}
+	}
+	console.log("oStuff", oStuff)
+	console.log("oData", oData)
+	render((
+		<MainView contacts={oData["Events Main"]} newContact={oNewContact} cssName="got-monkey"/>
 
 ), document.getElementById('main'));
+};
+oReq.open("get", "origins.json", true);
+oReq.send();
