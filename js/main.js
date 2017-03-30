@@ -69,7 +69,32 @@ ListTest.propTypes =
 	listItems:React.PropTypes.array.isRequired
 }
 
-class ContactForm extends React.Component
+// class ContactForm extends React.Component
+// {
+// 	constructor(oProps)
+// 	{
+// 		super(oProps);
+// 	}
+
+// 	render()
+// 	{
+// 		return (
+// 			<form>
+// 				<input type="text" placeholder="Name (req)" value={this.props.contact.name}></input>
+// 				<input type="text" placeholder="Email" value={this.props.contact.email}></input>
+// 				<textarea placeholder="description" value={this.props.contact.description}></textarea>
+// 				<button type="submit">Add Contact</button>
+// 			</form>
+// 		)
+// 	}
+// }
+
+// ContactForm.propTypes =
+// {
+// 	contact:React.PropTypes.object.isRequired,
+// };
+
+class FilterView extends React.Component
 {
 	constructor(oProps)
 	{
@@ -79,20 +104,15 @@ class ContactForm extends React.Component
 	render()
 	{
 		return (
-			<form>
-				<input type="text" placeholder="Name (req)" value={this.props.contact.name}></input>
-				<input type="text" placeholder="Email" value={this.props.contact.email}></input>
-				<textarea placeholder="description" value={this.props.contact.description}></textarea>
-				<button type="submit">Add Contact</button>
-			</form>
-		)
+			<div className={this.props.cssName}>
+			</div>
+		);
 	}
 }
-
-ContactForm.propTypes =
+FilterView.propTypes =
 {
-	contact:React.PropTypes.object.isRequired,
-};
+	cssName:React.PropTypes.string.isRequired
+}
 
 class MainView extends React.Component
 {
@@ -106,7 +126,7 @@ class MainView extends React.Component
 		return (
 			<div className={this.props.cssName}>
 				<Main listItems={this.props.contacts}/>
-				// <ContactForm contact={this.props.newContact}/>
+				{/*<ContactForm contact={this.props.newContact}/>*/}
 			</div>
 		);
 	}
@@ -115,18 +135,9 @@ class MainView extends React.Component
 MainView.propTypes =
 {
 	contacts:React.PropTypes.array.isRequired,
-	newContact:React.PropTypes.object.isRequired,
+	// newContact:React.PropTypes.object.isRequired,
 	cssName:React.PropTypes.string.isRequired
 }
-
-var aData =
-[
-	{key:"r0", name:"Bob", email:"bob@bob.com", description:"Makes the bacon"},
-	{key:"r1", name:"Doug", email:"doug@bob.com"},
-	{key:"r2", name:"Ain't having it"},
-];
-
-var oNewContact = {name:"", description:"", email:""};
 
 let oReq = new XMLHttpRequest();
 oReq.onload = (e)=>{
@@ -161,9 +172,14 @@ oReq.onload = (e)=>{
 	console.log("oStuff", oStuff)
 	console.log("oData", oData)
 	render((
-		<MainView contacts={oData["Events Main"]} newContact={oNewContact} cssName="got-monkey"/>
+		<FilterView filters={oStuff} cssName="got-monkey"/>
 
-), document.getElementById('main'));
+	), document.getElementById('filter-area'));
+	render((
+		// <MainView contacts={oData["Events Main"]} newContact={oNewContact} cssName="got-monkey"/>
+		<MainView contacts={oData["Events Main"]} cssName="got-monkey"/>
+
+	), document.getElementById('main'));
 };
 oReq.open("get", "origins.json", true);
 oReq.send();
