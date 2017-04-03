@@ -215,6 +215,7 @@ oReq.onload = (e)=>{
 	let aEvents = oData["Events Main"]
 	let oStuff = {
 		EventName:{},
+		EventNameArray:[],
 		EventStartDate:{},
 		EventStartTime:{},
 		EventCategory:{}
@@ -236,14 +237,26 @@ oReq.onload = (e)=>{
 			if(oStuff[sNew] !== null && oStuff[sNew] !== undefined && oStuff[sNew][oEvent[sNew]] == null)
 			{
 				oStuff[sNew][oEvent[sNew]] = true;
+				if (sNew == "EventName")
+				{
+					oStuff.EventNameArray.push(oEvent[sNew])
+				}
 			}
 		}
 	}
-	console.log("oStuff", oStuff)
-	console.log("oData", oData)
+
+	oStuff.EventNameArray = oStuff.EventNameArray.sort()
+	oStuff.EventName = {};
+	for (let sEN of oStuff.EventNameArray)
+	{
+		oStuff.EventName[sEN] = true;
+	}
+
+	delete oStuff.EventNameArray;
+	// console.log("oStuff", oStuff)
+	// console.log("oData", oData)
 
 	let fRenderMain = function (sCategory, sValue){
-		console.log("I are render", sCategory, sValue)
 		render((
 			<MainView eventData={oData["Events Main"]} filter={{category:sCategory, value:sValue}} cssName="got-monkey"/>
 
