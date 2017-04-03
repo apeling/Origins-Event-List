@@ -94,6 +94,31 @@ ListTest.propTypes =
 // 	contact:React.PropTypes.object.isRequired,
 // };
 
+class DynamicSelect extends React.Component
+{
+	constructor(oProps)
+	{
+		super(oProps);
+	}
+
+	render()
+	{
+		let aOptions = [];
+		for(let sProp in this.props.options)
+		{
+			aOptions.push(<option value="{sProp}">{sProp}</option>)
+		}
+
+		return (
+			<select>{aOptions}</select>
+		)
+	}
+}
+DynamicSelect.propTypes =
+{
+	options:React.PropTypes.object.isRequired
+}
+
 class FilterView extends React.Component
 {
 	constructor(oProps)
@@ -103,15 +128,20 @@ class FilterView extends React.Component
 
 	render()
 	{
+		let aSelects = [];
+		for(let sProp in this.props.filters)
+		{
+			aSelects.push(<DynamicSelect options={this.props.filters[sProp]}/>)
+		}
 		return (
-			<div className={this.props.cssName}>
-			</div>
+			<div className={this.props.cssName}>{aSelects}</div>
 		);
 	}
 }
 FilterView.propTypes =
 {
-	cssName:React.PropTypes.string.isRequired
+	cssName:React.PropTypes.string.isRequired,
+	filters:React.PropTypes.object.isRequired
 }
 
 class MainView extends React.Component
