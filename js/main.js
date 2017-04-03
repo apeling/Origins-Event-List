@@ -164,11 +164,7 @@ class FilterView extends React.Component
 	}
 
 	handleCompact(e) {
-		console.log("CHeck box change", e.target.checked)
 		this.props.onCompactUpdate(e.target.checked);
-		// let sValue = e.target.value === "null" ? null : e.target.value;
-		// this.state.value = sValue;
-		// this.props.onChangeCallback(this.props.category, sValue)
 	}
 
 	render()
