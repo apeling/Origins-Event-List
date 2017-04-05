@@ -1,0 +1,171 @@
+@mixin ui-icon($image, $w, $h) {
+	background: url("../Images/#{$image}");
+	background-size: $w $h;
+	background-repeat: no-repeat;
+	width:$w;
+	height:$h;
+	display:inline-block;
+}
+
+@mixin box-sizing($boxSize...)
+{
+	box-sizing: $boxSize;
+	-moz-box-sizing: $boxSize;
+	-ms-box-sizing: $boxSize;
+	-o-box-sizing: $boxSize;
+	-webkit-box-sizing: $boxSize;
+}
+
+@mixin user-select($userSelect) {
+	-moz-user-select: $userSelect;
+	-o-user-select: $userSelect;
+	-webkit-user-select: $userSelect;
+	user-select: $userSelect;
+}
+
+@mixin transition($transition...) {
+	-moz-transition: $transition;
+	-o-transition: $transition;
+	-webkit-transition: $transition;
+	transition: $transition;
+}
+
+@mixin transform($transform...) {
+	-moz-transform: $transform;
+	-ms-transform: $transform;
+	-o-transform: $transform;
+	-webkit-transform: $transform;
+	transform: $transform;
+}
+
+@mixin rotate($rotate...) {
+	@include transform(rotate($rotate));
+}
+
+//h-shadow v-shadow blur spread color inset;
+@mixin box-shadow($boxShadow...) {
+	-moz-box-shadow: $boxShadow;
+	-webkit-box-shadow: $boxShadow;
+	box-shadow: $boxShadow;
+}
+
+@mixin arrow-up($size, $color) {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-bottom: $size solid $color;
+	border-top: none;
+}
+
+@mixin arrow-up-size($width, $height, $color) {
+	width: 0;
+	height: 0;
+	border-top: none;
+	border-right: $width/2 solid transparent;
+	border-bottom: $height solid $color;
+	border-left: $width/2 solid transparent;
+}
+
+@mixin arrow-down($size, $color) {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-top: $size solid $color;
+	border-bottom: none;
+}
+
+@mixin arrow-down-size($width, $height, $color) {
+	width: 0;
+	height: 0;
+	border-top: $height solid $color;
+	border-right: $width/2 solid transparent;
+	border-bottom: none;
+	border-left: $width/2 solid transparent;
+}
+
+@mixin arrow-right($size, $color) {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-left: $size solid $color;
+	border-right: none;
+}
+
+@mixin arrow-right-size($width, $height, $color) {
+	width: 0;
+	height: 0;
+	border-top: $height/2 solid transparent;
+	border-bottom: $height/2 solid transparent;
+	border-left: $width solid $color;
+	border-right: none;
+}
+
+@mixin arrow-left($size, $color) {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-right:$size solid $color;
+	border-bottom: $size solid transparent;
+	border-left: none;
+}
+
+@mixin arrow-left-size($width, $height, $color) {
+	width: 0;
+	height: 0;
+	border-top: $height/2 solid transparent;
+	border-right:$width solid $color;
+	border-bottom: $height/2 solid transparent;
+	border-left: none;
+}
+
+@mixin quarter-circle-top-left($size, $color)
+{
+	width: $size;
+	height: $size;
+	background: $color;
+	border-radius: 0 0 $size 0;
+	-moz-border-radius: 0 0 $size 0;
+	-webkit-border-radius: 0 0 $size 0;
+}
+
+@mixin quarter-circle-top-right($size, $color)
+{
+	width: $size;
+	height: $size;
+	background: $color;
+	border-radius: 0 0 0 $size;
+	-moz-border-radius: 0 0 0 $size;
+	-webkit-border-radius: 0 0 0 $size;
+}
+
+@mixin quarter-circle-bottom-left($size, $color)
+{
+	width: $size;
+	height: $size;
+	background: $color;
+	border-radius: 0 $size 0 0;
+	-moz-border-radius: 0 $size 0 0;
+	-webkit-border-radius: 0 $size 0 0;
+}
+
+@mixin quarter-circle-bottom-right($size, $color)
+{
+	width: $size;
+	height: $size;
+	background: $color;
+	border-radius: $size 0 0 0;
+	-moz-border-radius: $size 0 0 0;
+	-webkit-border-radius: $size 0 0 0;
+}
+
+%vertical-align
+{
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}

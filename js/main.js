@@ -1,5 +1,6 @@
 import React from "react";
 import {render} from 'react-dom';
+import 'style!../sass/origins.scss';
 
 let oReq = new XMLHttpRequest();
 oReq.onload = (e)=>{
@@ -55,15 +56,15 @@ oReq.onload = (e)=>{
 
 	delete oStuff.EventNameArray;
 	let bCurrentCompact = false;
-	let nLimit = 0;
+	let nLimit = 1000;
 
 	let fCompact = function (bCompact, oFilters){
 		bCurrentCompact = bCompact;
 		fRenderEvents(oFilters)
 	}
 	
-	let fLimit = function (bLimit, oFilters){
-		nLimit = bLimit ? 1000 : 0;
+	let fLimit = function (bAll, oFilters){
+		nLimit = bAll ? 0 : 1000;
 		fRenderEvents(oFilters)
 	}
 
@@ -94,7 +95,6 @@ const EventList = ({events, filter, compactView, limit}) => {
 		filter = {};
 	}
 	limit = limit !== null && limit !== undefined ? limit : 0;
-	console.log("The limit is ", limit)
 	let oFilter = filter;
 	let nVisible = 0;
 	if (filter.category !== null)
@@ -139,18 +139,31 @@ const EventList = ({events, filter, compactView, limit}) => {
 				if(compactView)
 				{
 					return(
-						<li className="list-item" key={nI}>
-							<span><b>{oI["EventName"]}</b> | <span>{oI["EventStartDate"]} : {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span></span>
+						<li className="list-item compact-mode" key={nI}>
+							<div className="event-title"><b>{oI["EventName"]}</b></div>
+							<span className="where-when">{oI["EventStartDate"]} @ {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span>
 						</li>
 					)
 				}
 				else{
 					return(
 						<li className="list-item" key={nI}>
-							<span><b>{oI["EventName"]}</b> | <span>{oI["EventStartDate"]} : {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span></span>
-							<div><b>Category:</b> {oI["EventCategory"]}| <b>Players:</b> {oI["MaximumPlayers"]} | <b>Complexity:</b> {oI["GameComplexity"]}</div>
-							<div><b>Manufacturer:</b> {oI["GameManufacturer"]}| <b>System:</b> {oI["GameSystem"]} | <b>Host:</b> {oI["HostingCompanyorClub"]}</div>
-							<p>{oI["FeatureTextDescription"]}</p>
+							<div className="event-title"><b>{oI["EventName"]}</b></div>
+							<div className="row where-when">{oI["EventStartDate"]} @ {oI["EventStartTime"]}
+							</div>
+							<span className="duration"><b>Duration:</b> {oI["EventDuration"]}</span>
+							<div className="row">
+								<span className="col-3"><b>Category:</b> {oI["EventCategory"]}</span>
+								<span className="col-3"><b>Players:</b> {oI["MaximumPlayers"]}</span>
+								<span className="col-3"><b>Complexity:</b> {oI["GameComplexity"]}</span>
+							</div>
+							<div className="row">
+								<span className="col-3"><b>Manufacturer:</b> {oI["GameManufacturer"]}</span>
+								<span className="col-3"><b>System:</b> {oI["GameSystem"]}</span>
+								<span className="col-3"><b>Host:</b> {oI["HostingCompanyorClub"]}</span>
+							</div>
+							<div className="description-heading"><b>Description</b></div>
+							<p className="description">{oI["FeatureTextDescription"]}</p>
 						</li>
 					)	
 				}
@@ -227,7 +240,7 @@ class FilterView extends React.Component
 			nKey++;
 		}
 		return (
-			<div className={this.props.cssName}>{aSelects}<br/><input id="compactMode" name="compactMode" type="checkBox" onChange={this.handleCompact}></input><label htmlFor="compactMode">View in Compact Mode</label><input id="limited" name="limited" type="checkBox" onChange={this.handleLimit}></input><label htmlFor="limited">Limit to 1000 rows</label><div onClick={this.clearFilter} className={this.props.cssName}>Clear</div></div>
+			<div className={this.props.cssName}>{aSelects}<br/><input id="compactMode" name="compactMode" type="checkBox" onChange={this.handleCompact}></input><label htmlFor="compactMode">View in Compact Mode</label><input id="limited" name="limited" type="checkBox" onChange={this.handleLimit}></input><label htmlFor="limited">Show All</label><div onClick={this.clearFilter} className={this.props.cssName}>Clear</div></div>
 		);
 	}
 }
@@ -249,18 +262,18 @@ class DynamicSelect extends React.Component
 
 		this.handleChange = this.handleChange.bind(this)
 
-		this.state = {value:null};
+		this.state = {value:undefined};
 	}
 
 	handleChange(e) {
-		let sValue = e.target.value === "null" ? null : e.target.value;
+		let sValue = e.target.value === "undefined" ? undefined : e.target.value;
 		this.state.value = sValue;
 		this.props.onChangeCallback(this.props.category, sValue)
 	}
 
 	render()
 	{
-		let aOptions = [<option value={"null"} key={0}>Select a Filter</option>];
+		let aOptions = [<option value={`undefined`} key={0}>Select a Filter</option>];
 		let nKey = 1;
 		for(let sProp in this.props.options)
 		{

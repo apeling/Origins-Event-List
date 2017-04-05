@@ -1,0 +1,463 @@
+@import "vars";
+@import "browser";
+@import "mixins";
+@import "gridLayout";
+
+%uiFlatButton
+{
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	cursor: pointer;
+	@include transition(background-color 0.25s ease-in-out, border-color 0.25s ease-in-out);
+	font-family: $fontBody;
+	font-size:0.9em;
+	text-transform: uppercase;
+	text-decoration: none;
+
+	.button-icon
+	{
+		top:3px;
+		margin-right: 5px;
+	}
+}
+
+@mixin pageBreak($bDark : false){
+	border: 0;
+	height: 1px;
+
+	$startColor:if($bDark, darken($uiLightGrey, 15%), #f0f0f0);
+	$middleColor:if($bDark, darken($uiLightGrey, 3%), #8c8b8b);
+	$endColor:if($bDark, $uiLightGrey, #f0f0f0);
+
+	background-image: -webkit-linear-gradient(left, $startColor, $middleColor, $endColor);
+	background-image: -moz-linear-gradient(left, $startColor, $middleColor, $endColor);
+	background-image: -ms-linear-gradient(left, $startColor, $middleColor, $endColor);
+	background-image: -o-linear-gradient(left, $startColor, $middleColor, $endColor);
+}
+
+@mixin roundIconButton(){
+	.button-label, .icon-wrapper
+	{
+		display: inline-block;
+		color:$uiGrey;
+	}
+
+	.button-label
+	{
+		font-size: 0.6em;
+		margin-right: 5px;
+		top:5px;
+	}
+
+	.icon-wrapper
+	{
+		@include box-sizing(border-box);
+		$iconBox:30px;
+		font-size: 0.75em;
+		border-radius: $iconBox/2;
+		border:2px solid $uiGrey;
+		width:$iconBox;
+		height:$iconBox;
+
+		.wrapped-icon
+		{
+			top:4px;
+			left:5px;
+		}
+	}
+
+	&:hover
+	{
+		cursor: pointer;
+		.button-label, .icon-wrapper
+		{
+			color:$tamu;
+		}
+
+		.icon-wrapper
+		{
+			border-color:$tamu;
+		}
+	}
+}
+
+[class^="create-button"], [class^="cancel-button"], [class^="back-button"], [class^="ui-button"]
+{
+	display:inline-block;
+	@extend %uiFlatButton;
+	padding:5px 15px;
+	border-radius:5px;
+
+	&.disabled, &.disabled:hover
+	{
+		opacity: 0.5;
+		background:$uiGrey;
+		cursor:not-allowed;
+	}
+}
+
+[class^="page-property-"]
+{
+	padding:2px 10px;
+	.prefix
+	{
+		display:inline-block;
+		font-weight: bold;
+		margin-right: 5px;
+	}
+}
+
+[class^="create-button"]
+{
+	background:$uiGreen;
+	color:#ffffff;
+
+	&.disabled
+	{
+		opacity: 0.25;
+
+		&:hover
+		{
+			background:$uiGreen;
+			color:#ffffff;
+			cursor:not-allowed;
+		}
+	}
+
+	&:hover
+	{
+		background:$uiDarkGreen;
+	}
+}
+
+[class^="cancel-button"]
+{
+	background:$uiRed;
+	color:#ffffff;
+
+	&:hover
+	{
+		background:$uiDarkRed;
+	}
+}
+
+[class^="back-button"]
+{
+	background:$uiYellow;
+	color:#ffffff;
+
+	&:hover
+	{
+		background:$uiDarkYellow;
+	}
+}
+
+//Override default toastr notification top-right position to account for header height.
+.toast-top-right
+{
+	top:80px;
+}
+
+//Override width setting
+.toast-top-full-width
+{
+	top:80px;
+	width: 75%;
+}
+
+i.link-icon
+{
+	top:4px;
+	margin-right: 5px;
+}
+
+[class^="tg-popup"]
+{
+	min-width: 300px;
+	max-width: 550px;
+	min-height: 250px;
+	background:#ffffff;
+	border-radius: 5px;
+
+	text-align: right;
+
+	.title
+	{
+		border-top-left-radius:4px;
+		border-top-right-radius:4px;
+		padding:5px 10px;
+		background:$tamu;
+		color:#ffffff;
+		font-style: $fontEmphasis;
+		font-weight: 700;
+		text-align: left;
+
+		.title-icon
+		{
+			margin-right: 5px;
+			top:6px;
+		}
+	}
+
+	.body
+	{
+		text-align: left;
+		padding:10px;
+		font-size:1.1em;
+		padding-bottom:50px;
+
+		.emphasize
+		{
+			font-weight:700;
+		}
+	}
+
+	.button-wrapper
+	{
+		position: absolute;
+		bottom:10px;
+		right:10px;
+		display: inline-block;
+		.button-confirm, .button-cancel
+		{
+			@extend %uiFlatButton;
+			display: inline-block;
+			color:#ffffff;
+			font-size: 1em;
+			padding: 5px 10px;
+		}
+
+		[class^="button-"]
+		{
+			&.disabled
+			{
+				opacity: 0.25;
+				cursor: not-allowed;
+			}
+		}
+
+		.button-confirm
+		{
+			margin-right:5px;
+			background: $uiGreen;
+
+			&:hover
+			{
+				background: $uiDarkGreen;
+			}
+
+			&.disabled:hover
+			{
+				background: $uiGreen;
+			}
+		}
+
+		.button-cancel
+		{
+			margin-right:5px;
+
+			// @extend %redButton;
+			background: $uiRed;
+
+			&:hover
+			{
+				// @extend %redHoverStyle;
+				background: $uiDarkRed;
+			}
+
+			&.disabled:hover
+			{
+				background: $uiRed;
+			}
+		}
+	}
+}
+
+.tg-popup-error
+{
+	.title
+	{
+		background:$uiDarkRed;
+	}
+}
+
+html, body
+{
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+body
+{
+	font-family:$fontBody;
+	color:$darkText;
+
+	$margin:5%;
+
+	.view
+	{
+		min-height:100%;
+		background:rgba(#ffffff, 1);
+
+		.view-background, .content
+		{
+			margin-left:$margin;
+			margin-right:$margin;
+			width: 90%;
+		}
+
+		.view-background
+		{
+			position: absolute;
+			height: 100%;
+			background: #ffffff;
+		}
+
+		.content
+		{
+			padding-bottom: 28px;
+		}
+	}
+
+    .items
+    {
+        padding:10px;
+        background:#dddddd;
+
+        .list-item
+        {
+            color:#000000;
+            padding:5px 10px;
+            padding-bottom:20px;
+            border-bottom:1px solid $darkText;
+            font-size:0.9em;
+
+            .event-title
+            {
+                font-size:1.2em;
+                font-family:$fontEmphasis;
+                padding-bottom:2px;
+            }
+
+            .where-when
+            {
+                font-size:1.2em;
+                font-family:$fontEmphasis;
+                font-style: italic;
+                padding-bottom:5px;
+            }
+
+            &.compact-mode
+            {
+                .event-title, .where-when
+                {
+                    padding-right:15px;
+                    padding-bottom:0px;
+                }
+
+                .duration
+                {
+                    font-size:1.2em;
+                }
+            }
+
+            .description-heading
+            {
+                margin-top:10px;
+            }
+
+            .description
+            {
+                max-width: 1000px;
+            }
+
+            margin-top:10px;
+
+            &:last-child
+            {
+                border-bottom:none;
+            }
+        }
+    }
+
+	.notification-bg
+	{
+		background:rgba(0,0,0, 0.75);
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 1038;
+	}
+
+	.notification
+	{
+		position: fixed;
+		/* center the div */
+		right: 0;
+		left: 0;
+		margin-right: auto;
+		margin-left: auto;
+		top:15%;
+		width: 75%;
+		z-index: 1050;
+		background:rgba(0,0,0, 0.75);
+	}
+
+	.basic.notification
+	{
+		.message
+		{
+			border: 4px solid white;
+			border-radius: 5px;
+			color:white;
+			padding: 20px 50px;
+		}
+	}
+
+	.deleteNotice, .savingWarning, .addingNotice
+	{
+		background: none;
+		.message
+		{
+			border: 4px solid $uiLightGrey;
+			border-radius: 5px;
+			color:$tamu;
+			background:#ffffff;
+			padding: 20px 50px;
+			font-family: $fontEmphasis;
+			font-weight: 700;
+			font-size:2em;
+		}
+	}
+}
+
+select::-ms-expand
+{
+	display: none; /* hide default arrow in IE10 */
+}
+
+select
+{
+	font-family:$fontBody;
+}
+
+.txca-tip
+{
+	border-radius: 5px;
+	border: 2px solid #808080;
+	background: #F5F5F5;
+	color: #000000;
+	@include box-shadow(rgba(0,0,0,0.2) 4px 3px 5px);
+
+	.tooltipster-content
+	{
+		// font-family: Arial, sans-serif;
+		font-family:$fontBody;
+		font-size: 14px;//using em units seems to break tooltipster.
+		line-height: 16px;
+		padding: 8px 10px;
+	}
+}

@@ -1,0 +1,35 @@
+//See _commonAssets to set font presets (font-family, font-size, font-weight, etc)
+
+//Font name variables
+$fontArial:Arial, Helvetica, sans-serif;
+$fontOpenSans:'Open Sans', sans-serif;
+
+//Ambiguous font variables
+$fontBody:$fontOpenSans;
+$fontEmphasis:$fontOpenSans;
+
+//Colors
+$tamu:#500000; //#5E0025
+$tamuLight:#8F0038;
+$tamuGrey:#898D8D;
+$darkText:#363636;
+
+$uiGreen:#687F39;
+$uiDarkGreen:#2A4D37;
+
+$uiRed:#B7002A;
+$uiDarkRed:#550013;
+
+$uiGrey:#464646;
+$uiMedGrey:#B1B1B1;
+$uiLightGrey:#DBDBDB;
+
+$uiYellow:#B7995D;
+$uiDarkYellow:#7A663E;
+
+$uiBlue:$uiLightGrey;
+$uiBlueRecess:$uiGrey;
+
+$lightBlue:#6999AF;
+$tableRowBlue:#DEE7EC;
+$tableRowBlue2:#DEE7EC;

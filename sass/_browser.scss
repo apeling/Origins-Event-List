@@ -1,0 +1,58 @@
+* {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	position: relative;
+	vertical-align: top;
+	-moz-user-drag: none;
+	-webkit-user-drag: none;
+	// -moz-user-select: none;
+	// -webkit-user-select: none;
+	-moz-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	-moz-touch-callout: none;
+	-webkit-touch-callout: none;
+	-moz-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+*:after {
+	display: inline-block;
+}
+
+.hidden {
+	display: none !important;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+	margin: 0px;
+	padding: 0px;
+	-webkit-font-smoothing: antialiased;
+	//-webkit-backface-visibility:hidden; //causes flickering html elements....which it was supposed to PREVENT.
+}
+
+button { background: none; border: none; margin: 0; padding: 0; font-size: 0; line-height: 0; width: auto; overflow: visible; }
+
+body {
+	-ms-touch-action: none;
+	-webkit-font-smoothing: antialiased;
+}
+
+li {
+	list-style: none;
+}
+
+input, textarea {
+	-moz-user-select: text;
+	-webkit-user-select: text;
+}
+
+*:focus {
+	outline: none;
+}
