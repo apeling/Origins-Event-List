@@ -14,9 +14,18 @@ oReq.onload = (e)=>{
 		EventCategory:{}
 	};
 
+	let oDateFix =
+	{
+		"Wed. 6/14":"6/14/2017",
+		"Thu. 6/15":"6/15/2017",
+		"Thurs. 6/15":"6/15/2017",
+		"Fri. 6/16":"6/16/2017",
+		"Sat. 6/17":"6/17/2017",
+		"Sun. 6/18":"6/18/2017"
+	}
+
 	for (let oEvent of aEvents)
 	{
-				
 		for(let sProp in oEvent)
 		{
 			//Turning presentation data in filterable categorical data with useable field names. Removing spaces and carriage returns. 
@@ -26,6 +35,23 @@ oReq.onload = (e)=>{
 			if (oEvent[sProp].substr(0,1) === " ")
 			{
 				oEvent[sProp] = oEvent[sProp].replace(" ", "");
+			}
+
+			if (sNew == "EventStartDate")
+			{
+				const sDate = oEvent[sProp];
+				if(oDateFix[sDate])
+				{
+					oEvent[sProp] = oDateFix[sDate]
+				}
+				else if(sDate.indexOf("/17") === 4)
+				{
+					oEvent[sProp] = sDate.replace("/17", "/2017");
+				}
+				else if(sDate.indexOf("/17/17") === 1)
+				{
+					oEvent[sProp] = sDate.replace("/17/17", "/17/2017");
+				}
 			}
 
 			//Copy data to the new scrubbed attribute name, delete the previous.
