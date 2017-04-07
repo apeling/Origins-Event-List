@@ -2,3 +2,7 @@
 .idea
 node_modules
 
+build/bundle.js
+build/bundle.js.map
+build/main.css
+build/main.css.map
