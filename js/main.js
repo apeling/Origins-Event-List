@@ -28,7 +28,7 @@ oReq.onload = (e)=>{
 	{
 		for(let sProp in oEvent)
 		{
-			//Turning presentation data in filterable categorical data with useable field names. Removing spaces and carriage returns. 
+			//Turning presentation data in filterable categorical data with useable field names. Removing spaces and carriage returns.
 			const sNew = sProp.replace(new RegExp(" ", 'g'), "").replace(/[\n\r]/g, '');
 
 			//Seriously, this data, so bad. Removing leading whitespace.
@@ -88,7 +88,7 @@ oReq.onload = (e)=>{
 		bCurrentCompact = bCompact;
 		fRenderEvents(oFilters)
 	}
-	
+
 	let fLimit = function (bAll, oFilters){
 		nLimit = bAll ? 0 : 1000;
 		fRenderEvents(oFilters)
@@ -103,7 +103,6 @@ oReq.onload = (e)=>{
 	}
 
 	let fClear = function (){
-		bCurrentCompact = false;
 		fRenderFilters();
 		fRenderEvents();
 	}
@@ -131,7 +130,7 @@ const EventList = ({events, filter, compactView, limit}) => {
 		oTemp[sCategory] = sValue;
 		filter = oTemp;
 	}
-	
+
 	var aItems = events.map(
 		(oI, nI)=>
 		{
@@ -167,7 +166,7 @@ const EventList = ({events, filter, compactView, limit}) => {
 					return(
 						<li className="list-item compact-mode" key={nI}>
 							<div className="event-title"><b>{oI["EventName"]}</b></div>
-							<span className="where-when">{oI["EventStartDate"]} @ {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span>
+							<span className="where-when"><i className="property-icon fa fa-calendar" aria-hidden="true"></i> {oI["EventStartDate"]} @ {oI["EventStartTime"]} ({oI["EventDuration"]} hours)</span>
 						</li>
 					)
 				}
@@ -175,7 +174,7 @@ const EventList = ({events, filter, compactView, limit}) => {
 					return(
 						<li className="list-item" key={nI}>
 							<div className="event-title"><b>{oI["EventName"]}</b></div>
-							<div className="row where-when">{oI["EventStartDate"]} @ {oI["EventStartTime"]}
+							<div className="row where-when"><i className="property-icon fa fa-calendar" aria-hidden="true"></i> {oI["EventStartDate"]} @ {oI["EventStartTime"]}
 							</div>
 							<span className="duration"><b>Duration:</b> {oI["EventDuration"]}</span>
 							<div className="row">
@@ -191,7 +190,7 @@ const EventList = ({events, filter, compactView, limit}) => {
 							<div className="description-heading"><b>Description</b></div>
 							<p className="description">{oI["FeatureTextDescription"]}</p>
 						</li>
-					)	
+					)
 				}
 			}
 			else {return null};
@@ -201,8 +200,9 @@ const EventList = ({events, filter, compactView, limit}) => {
 	if (limit > 0 && nVisible > limit)
 	{
 		aItems = aItems.slice(0, limit);
+		nVisible = limit;
 	}
-	return (<div><span>{nVisible} Items.</span><ul className="items">{aItems}</ul></div>);
+	return (<div className="item-area"><span className="item-counter">Showing {nVisible} events. There are {events.length} in total</span><ul className="items">{aItems}</ul></div>);
 };
 
 EventList.propTypes =
@@ -236,7 +236,7 @@ class FilterView extends React.Component
 	handleCompact(e) {
 		this.props.onCompactUpdate(e.target.checked, this.state);
 	}
-	
+
 	handleLimit(e) {
 		this.props.onLimit(e.target.checked, this.state);
 	}
@@ -245,7 +245,7 @@ class FilterView extends React.Component
 		this.state[sCategory] = sValue
 		this.props.onChangeCallback(this.state);
 	}
-	
+
 	clearFilter() {
 		for(let sProp in this.props.filters)
 		{
@@ -266,7 +266,13 @@ class FilterView extends React.Component
 			nKey++;
 		}
 		return (
-			<div className={this.props.cssName}>{aSelects}<br/><input id="compactMode" name="compactMode" type="checkBox" onChange={this.handleCompact}></input><label htmlFor="compactMode">View in Compact Mode</label><input id="limited" name="limited" type="checkBox" onChange={this.handleLimit}></input><label htmlFor="limited">Show All</label><div onClick={this.clearFilter} className={this.props.cssName}>Clear</div></div>
+			<div className={this.props.cssName}>
+				<div className="selects">{aSelects}</div>
+				<div className="check-wrapper">
+					<input className="checkbox" id="compactMode" name="compactMode" type="checkBox" onChange={this.handleCompact}></input><label htmlFor="compactMode">View in Compact Mode</label><i className="space fa fa-eye-slash" aria-hidden="true"></i><input className="checkbox" id="limited" name="limited" type="checkBox" onChange={this.handleLimit}></input><label htmlFor="limited">Show All</label>
+				</div>
+				<div className="button-wrapper"><div onClick={this.clearFilter} className="cancel-button"><i className="button-icon fa fa-ban" aria-hidden="true"></i>Clear Filters</div></div>
+			</div>
 		);
 	}
 }
@@ -299,7 +305,7 @@ class DynamicSelect extends React.Component
 
 	render()
 	{
-		let aOptions = [<option value={`undefined`} key={0}>Select a Filter</option>];
+		let aOptions = [<option value={`undefined`} key={0}>{this.props.category}</option>];
 		let nKey = 1;
 		for(let sProp in this.props.options)
 		{
@@ -318,5 +324,5 @@ DynamicSelect.propTypes =
 	options:React.PropTypes.object.isRequired,
 	category:React.PropTypes.string.isRequired,
 	onChangeCallback:React.PropTypes.func.isRequired,
-	value:React.PropTypes.string.isRequired
+	value:React.PropTypes.string
 }

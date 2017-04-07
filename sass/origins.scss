@@ -96,17 +96,6 @@
 	}
 }
 
-[class^="page-property-"]
-{
-	padding:2px 10px;
-	.prefix
-	{
-		display:inline-block;
-		font-weight: bold;
-		margin-right: 5px;
-	}
-}
-
 [class^="create-button"]
 {
 	background:$uiGreen;
@@ -163,12 +152,6 @@
 {
 	top:80px;
 	width: 75%;
-}
-
-i.link-icon
-{
-	top:4px;
-	margin-right: 5px;
 }
 
 [class^="tg-popup"]
@@ -307,6 +290,44 @@ body
 			width: 90%;
 		}
 
+		.page-title
+		{
+			background:$darkText;
+			color:#ffffff;
+			padding:10px;
+			.header-image
+			{
+				width:50px;
+				position: absolute;
+				top:2px;
+				left:2px;
+			}
+
+			h1, a
+			{
+				margin-left:$margin;
+				margin-right:$margin;
+			}
+
+			.link-holder
+			{
+				a
+				{
+					text-decoration: none;
+					color:#ffffff;
+					&:hover
+					{
+						text-decoration: underline;
+					}
+
+					.fa
+					{
+						top:3px;
+					}
+				}
+			}
+		}
+
 		.view-background
 		{
 			position: absolute;
@@ -317,69 +338,147 @@ body
 		.content
 		{
 			padding-bottom: 28px;
+
+			.got-monkey
+			{
+				padding-top:15px;
+				.selects
+				{
+					select
+					{
+						padding: 6px 12px;
+						font-size: 14px;
+						line-height: 1.42857143;
+						color: $darkText;
+						background-color: #fff;
+						background-image: none;
+						border: 1px solid #ccc;
+						border-radius: 4px;
+						margin-right: 5px;
+					}
+
+					padding-bottom:15px;
+				}
+
+				.button-wrapper
+				{
+					padding-top:15px;
+					padding-bottom:15px;
+				}
+
+				.check-wrapper
+				{
+					border:1px solid #ccc;
+					border-radius: 4px;
+					-webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) inset;
+					-moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) inset;
+					box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) inset;
+
+					padding:6px 12px;
+					display:inline-block;
+
+					margin-right: 15px;
+
+					.space
+					{
+						margin-left: 15px;
+						margin-right: 15px;
+						top:3px;
+					}
+
+					label
+					{
+						cursor: pointer;
+					}
+
+					.checkbox
+					{
+						margin-right: 5px;
+						top:5px;
+					}
+				}
+			}
+
+			.item-area
+			{
+				padding-top:15px;
+
+				.item-counter
+				{
+					font-size:1em;
+					font-style:italic;
+					font-weight: 700;
+					font-family: $fontEmphasis;
+				}
+			}
 		}
 	}
 
-    .items
-    {
-        padding:10px;
-        background:#dddddd;
+	.items
+	{
+		padding:10px;
+		background:#dddddd;
 
-        .list-item
-        {
-            color:#000000;
-            padding:5px 10px;
-            padding-bottom:20px;
-            border-bottom:1px solid $darkText;
-            font-size:0.9em;
+		.list-item
+		{
+			color:#000000;
+			padding:5px 10px;
+			padding-bottom:20px;
+			border-bottom:1px solid $darkText;
+			font-size:0.9em;
 
-            .event-title
-            {
-                font-size:1.2em;
-                font-family:$fontEmphasis;
-                padding-bottom:2px;
-            }
+			.property-icon
+			{
+				top:2px;
+			}
 
-            .where-when
-            {
-                font-size:1.2em;
-                font-family:$fontEmphasis;
-                font-style: italic;
-                padding-bottom:5px;
-            }
+			.event-title
+			{
+				font-size:1.2em;
+				font-family:$fontEmphasis;
+				padding-bottom:2px;
+			}
 
-            &.compact-mode
-            {
-                .event-title, .where-when
-                {
-                    padding-right:15px;
-                    padding-bottom:0px;
-                }
+			.where-when
+			{
+				font-size:1.2em;
+				font-family:$fontEmphasis;
+				font-style: italic;
+				padding-bottom:5px;
+			}
 
-                .duration
-                {
-                    font-size:1.2em;
-                }
-            }
+			&.compact-mode
+			{
+				.event-title, .where-when
+				{
+					padding-right:15px;
+					padding-bottom:0px;
+				}
 
-            .description-heading
-            {
-                margin-top:10px;
-            }
+				.duration
+				{
+					font-size:1.2em;
+				}
+			}
 
-            .description
-            {
-                max-width: 1000px;
-            }
+			.description-heading
+			{
+				margin-top:10px;
+			}
 
-            margin-top:10px;
+			.description
+			{
+				max-width: 1000px;
+			}
 
-            &:last-child
-            {
-                border-bottom:none;
-            }
-        }
-    }
+			margin-top:10px;
+
+			&:last-child
+			{
+				border-bottom:none;
+			}
+		}
+	}
 
 	.notification-bg
 	{
