@@ -37,6 +37,30 @@ oReq.onload = (e)=>{
 				oEvent[sProp] = oEvent[sProp].replace(" ", "");
 			}
 
+			if(sNew == "EventStartTime")
+			{
+				const sTime = oEvent[sProp];
+				if (sTime.indexOf("00:00") >= 0)
+				{
+					oEvent[sProp] = sTime.replace("00:00", "00")
+				}
+
+				if (sTime.indexOf("0PM") >= 0)
+				{
+					oEvent[sProp] = oEvent[sProp].replace("0PM", "0 PM")
+				}
+
+				if (sTime.indexOf("0AM") >= 0)
+				{
+					oEvent[sProp] = oEvent[sProp].replace("0AM", "0 AM")
+				}
+
+				if (sTime.indexOf("0am") >= 0)
+				{
+					oEvent[sProp] = oEvent[sProp].replace("0am", "0 AM")
+				}
+			}
+
 			if (sNew == "EventStartDate")
 			{
 				const sDate = oEvent[sProp];
